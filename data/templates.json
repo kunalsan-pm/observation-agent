@@ -1,0 +1,284 @@
+[
+  {
+    "template_id": "TPL-PRJ-1",
+    "project_id": "PRJ-1",
+    "name": "Warehouse Operations Observation",
+    "topics": [
+      {
+        "topic_id": "safety_procedures",
+        "name": "Safety Procedures",
+        "questions": [
+          {
+            "question_id": "Q-101",
+            "text": "Lockout-tagout procedure followed",
+            "is_critical": true
+          },
+          {
+            "question_id": "Q-102",
+            "text": "Required PPE worn",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-103",
+            "text": "Hazard zones marked appropriately",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-104",
+            "text": "Equipment inspection completed pre-shift",
+            "is_critical": false
+          }
+        ]
+      },
+      {
+        "topic_id": "order_quality",
+        "name": "Order Quality",
+        "questions": [
+          {
+            "question_id": "Q-105",
+            "text": "Pick accuracy verified at scan",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-106",
+            "text": "Damage check completed before pack",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-107",
+            "text": "Documentation matches order",
+            "is_critical": false
+          }
+        ]
+      },
+      {
+        "topic_id": "process_efficiency",
+        "name": "Process Efficiency",
+        "questions": [
+          {
+            "question_id": "Q-108",
+            "text": "Tasks sequenced to minimize travel",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-109",
+            "text": "Equipment used within design envelope",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-110",
+            "text": "Communication with team clear",
+            "is_critical": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "template_id": "TPL-PRJ-2",
+    "project_id": "PRJ-2",
+    "name": "Distribution Center Observation",
+    "topics": [
+      {
+        "topic_id": "load_handling",
+        "name": "Load Handling",
+        "questions": [
+          {
+            "question_id": "Q-201",
+            "text": "Load secured before move",
+            "is_critical": true
+          },
+          {
+            "question_id": "Q-202",
+            "text": "Forklift operated within bounds",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-203",
+            "text": "Pallet condition checked",
+            "is_critical": false
+          }
+        ]
+      },
+      {
+        "topic_id": "distribution_handoff",
+        "name": "Distribution Handoff",
+        "questions": [
+          {
+            "question_id": "Q-204",
+            "text": "Signature captured at handoff",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-205",
+            "text": "Temperature log verified",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-206",
+            "text": "Route adherence confirmed",
+            "is_critical": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "template_id": "TPL-PRJ-3",
+    "project_id": "PRJ-3",
+    "name": "Food Safety Observation",
+    "topics": [
+      {
+        "topic_id": "food_safety",
+        "name": "Food Safety",
+        "questions": [
+          {
+            "question_id": "Q-301",
+            "text": "Cold chain maintained at receiving",
+            "is_critical": true
+          },
+          {
+            "question_id": "Q-302",
+            "text": "Allergen separation followed",
+            "is_critical": true
+          },
+          {
+            "question_id": "Q-303",
+            "text": "Sanitation log completed",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-304",
+            "text": "Hand-washing observed at interval",
+            "is_critical": false
+          }
+        ]
+      },
+      {
+        "topic_id": "prep_quality",
+        "name": "Prep Quality",
+        "questions": [
+          {
+            "question_id": "Q-305",
+            "text": "Cuts/portions within spec",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-306",
+            "text": "Prep area labeled correctly",
+            "is_critical": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "template_id": "TPL-PRJ-4",
+    "project_id": "PRJ-4",
+    "name": "Quality Control Observation",
+    "topics": [
+      {
+        "topic_id": "quality_inspection",
+        "name": "Quality Inspection",
+        "questions": [
+          {
+            "question_id": "Q-401",
+            "text": "Inspection sample size correct",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-402",
+            "text": "Reject criteria applied consistently",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-403",
+            "text": "Defect log updated within shift",
+            "is_critical": false
+          }
+        ]
+      },
+      {
+        "topic_id": "calibration",
+        "name": "Calibration & Equipment",
+        "questions": [
+          {
+            "question_id": "Q-404",
+            "text": "Calibration check completed",
+            "is_critical": true
+          },
+          {
+            "question_id": "Q-405",
+            "text": "Tools returned to designated bay",
+            "is_critical": false
+          }
+        ]
+      },
+      {
+        "topic_id": "defect_tracking",
+        "name": "Defect Tracking",
+        "questions": [
+          {
+            "question_id": "Q-406",
+            "text": "Defect category coded accurately",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-407",
+            "text": "Root cause logged when known",
+            "is_critical": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "template_id": "TPL-PRJ-5",
+    "project_id": "PRJ-5",
+    "name": "Care Auditing Observation",
+    "topics": [
+      {
+        "topic_id": "care_protocol",
+        "name": "Care Protocol",
+        "questions": [
+          {
+            "question_id": "Q-501",
+            "text": "Identification verified before care",
+            "is_critical": true
+          },
+          {
+            "question_id": "Q-502",
+            "text": "Care plan reviewed pre-interaction",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-503",
+            "text": "Documentation completed timely",
+            "is_critical": false
+          }
+        ]
+      },
+      {
+        "topic_id": "interaction_quality",
+        "name": "Interaction Quality",
+        "questions": [
+          {
+            "question_id": "Q-504",
+            "text": "Respectful tone maintained",
+            "is_critical": false
+          },
+          {
+            "question_id": "Q-505",
+            "text": "Privacy boundary observed",
+            "is_critical": true
+          },
+          {
+            "question_id": "Q-506",
+            "text": "Clarification offered when needed",
+            "is_critical": false
+          }
+        ]
+      }
+    ]
+  }
+]

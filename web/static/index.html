@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Observation Agent</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- ───────────────── header ───────────────── -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">◆</span>
+        <div>
+          <h1>Observation Agent</h1>
+          <p class="brand-sub">Safety &amp; quality observations · natural language</p>
+        </div>
+      </div>
+
+      <div class="topbar-meta">
+        <div id="dataset-chips" class="chips" aria-label="Dataset summary"></div>
+        <div class="topbar-actions">
+          <button id="backend-badge" class="badge" type="button" aria-haspopup="dialog">
+            <span class="dot" aria-hidden="true"></span><span id="backend-label">checking…</span>
+          </button>
+          <button id="theme-toggle" class="icon-btn" type="button" title="Toggle theme" aria-label="Toggle theme">◐</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ───────────────── sidebar ───────────────── -->
+    <aside class="sidebar">
+      <nav class="panel">
+        <h2 class="panel-title">Question library</h2>
+        <p class="panel-hint">Click to ask. Grouped as in the brief.</p>
+        <div id="question-groups"></div>
+      </nav>
+
+      <section class="panel panel-reports">
+        <div class="panel-head">
+          <h2 class="panel-title">Reports</h2>
+          <button id="refresh-reports" class="icon-btn sm" type="button" title="Refresh" aria-label="Refresh reports">↻</button>
+        </div>
+        <p class="panel-hint">Written to <code>outputs/</code>.</p>
+        <ul id="report-list" class="report-list"></ul>
+      </section>
+    </aside>
+
+    <!-- ───────────────── conversation ───────────────── -->
+    <main class="main">
+      <div id="transcript" class="transcript" aria-live="polite">
+        <div id="welcome" class="welcome">
+          <h2>Ask about the observation data</h2>
+          <p>
+            The agent reasons over a live MCP server: catalog lookups, filtered retrieval,
+            server-side aggregation, and purpose-built pattern detectors. Every tool call it
+            makes is shown inline, so you can check the path to any answer — and every answer
+            is also written to a markdown report.
+          </p>
+          <div id="welcome-examples" class="welcome-examples"></div>
+        </div>
+      </div>
+
+      <form id="composer" class="composer" autocomplete="off">
+        <div class="composer-box">
+          <textarea id="question-input" rows="1" placeholder="Ask a question about the observations data…" aria-label="Your question"></textarea>
+          <div class="composer-actions">
+            <button id="stop-btn" class="btn ghost" type="button" hidden>Stop</button>
+            <button id="send-btn" class="btn primary" type="submit">
+              <span class="send-label">Ask</span>
+            </button>
+          </div>
+        </div>
+        <p class="composer-hint">
+          <kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line ·
+          data as of <strong id="as-of">2026-05-12</strong>
+        </p>
+      </form>
+    </main>
+  </div>
+
+  <!-- ───────────────── report drawer ───────────────── -->
+  <div id="drawer-scrim" class="scrim" hidden></div>
+  <aside id="drawer" class="drawer" hidden aria-label="Report viewer">
+    <header class="drawer-head">
+      <div>
+        <p class="drawer-kicker">Report</p>
+        <h2 id="drawer-title">—</h2>
+      </div>
+      <div class="drawer-head-actions">
+        <button id="drawer-copy" class="btn ghost sm" type="button">Copy</button>
+        <button id="drawer-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+      </div>
+    </header>
+    <div id="drawer-body" class="drawer-body markdown"></div>
+  </aside>
+
+  <!-- ───────────────── backend dialog ───────────────── -->
+  <div id="backend-scrim" class="scrim" hidden></div>
+  <div id="backend-dialog" class="dialog" hidden role="dialog" aria-label="Model backend">
+    <header class="dialog-head">
+      <h2>Model backend</h2>
+      <button id="backend-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+    </header>
+    <div id="backend-body" class="dialog-body"></div>
+  </div>
+
+  <script src="/static/markdown.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

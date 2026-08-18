@@ -1,0 +1,17 @@
+[
+  {
+    "org_id": "ORG-AAA",
+    "name": "Acme Logistics",
+    "industry": "logistics"
+  },
+  {
+    "org_id": "ORG-BBB",
+    "name": "Better Foods",
+    "industry": "food_service"
+  },
+  {
+    "org_id": "ORG-CCC",
+    "name": "Care Systems",
+    "industry": "healthcare"
+  }
+]

@@ -1,0 +1,212 @@
+[
+  {
+    "work_area_id": "WA-001",
+    "location_id": "LOC-001",
+    "project_id": "PRJ-1",
+    "org_id": "ORG-AAA",
+    "name": "Work Area 1"
+  },
+  {
+    "work_area_id": "WA-002",
+    "location_id": "LOC-001",
+    "project_id": "PRJ-1",
+    "org_id": "ORG-AAA",
+    "name": "Work Area 2"
+  },
+  {
+    "work_area_id": "WA-003",
+    "location_id": "LOC-002",
+    "project_id": "PRJ-1",
+    "org_id": "ORG-AAA",
+    "name": "Work Area 3"
+  },
+  {
+    "work_area_id": "WA-004",
+    "location_id": "LOC-002",
+    "project_id": "PRJ-1",
+    "org_id": "ORG-AAA",
+    "name": "Work Area 4"
+  },
+  {
+    "work_area_id": "WA-005",
+    "location_id": "LOC-003",
+    "project_id": "PRJ-1",
+    "org_id": "ORG-AAA",
+    "name": "Work Area 5"
+  },
+  {
+    "work_area_id": "WA-006",
+    "location_id": "LOC-003",
+    "project_id": "PRJ-1",
+    "org_id": "ORG-AAA",
+    "name": "Work Area 6"
+  },
+  {
+    "work_area_id": "WA-007",
+    "location_id": "LOC-004",
+    "project_id": "PRJ-2",
+    "org_id": "ORG-AAA",
+    "name": "Work Area 7"
+  },
+  {
+    "work_area_id": "WA-008",
+    "location_id": "LOC-004",
+    "project_id": "PRJ-2",
+    "org_id": "ORG-AAA",
+    "name": "Work Area 8"
+  },
+  {
+    "work_area_id": "WA-009",
+    "location_id": "LOC-005",
+    "project_id": "PRJ-2",
+    "org_id": "ORG-AAA",
+    "name": "Work Area 9"
+  },
+  {
+    "work_area_id": "WA-010",
+    "location_id": "LOC-005",
+    "project_id": "PRJ-2",
+    "org_id": "ORG-AAA",
+    "name": "Work Area 10"
+  },
+  {
+    "work_area_id": "WA-011",
+    "location_id": "LOC-006",
+    "project_id": "PRJ-2",
+    "org_id": "ORG-AAA",
+    "name": "Work Area 11"
+  },
+  {
+    "work_area_id": "WA-012",
+    "location_id": "LOC-006",
+    "project_id": "PRJ-2",
+    "org_id": "ORG-AAA",
+    "name": "Work Area 12"
+  },
+  {
+    "work_area_id": "WA-013",
+    "location_id": "LOC-007",
+    "project_id": "PRJ-3",
+    "org_id": "ORG-BBB",
+    "name": "Work Area 13"
+  },
+  {
+    "work_area_id": "WA-014",
+    "location_id": "LOC-007",
+    "project_id": "PRJ-3",
+    "org_id": "ORG-BBB",
+    "name": "Work Area 14"
+  },
+  {
+    "work_area_id": "WA-015",
+    "location_id": "LOC-008",
+    "project_id": "PRJ-3",
+    "org_id": "ORG-BBB",
+    "name": "Work Area 15"
+  },
+  {
+    "work_area_id": "WA-016",
+    "location_id": "LOC-008",
+    "project_id": "PRJ-3",
+    "org_id": "ORG-BBB",
+    "name": "Work Area 16"
+  },
+  {
+    "work_area_id": "WA-017",
+    "location_id": "LOC-009",
+    "project_id": "PRJ-3",
+    "org_id": "ORG-BBB",
+    "name": "Work Area 17"
+  },
+  {
+    "work_area_id": "WA-018",
+    "location_id": "LOC-009",
+    "project_id": "PRJ-3",
+    "org_id": "ORG-BBB",
+    "name": "Work Area 18"
+  },
+  {
+    "work_area_id": "WA-019",
+    "location_id": "LOC-010",
+    "project_id": "PRJ-4",
+    "org_id": "ORG-BBB",
+    "name": "Work Area 19"
+  },
+  {
+    "work_area_id": "WA-020",
+    "location_id": "LOC-010",
+    "project_id": "PRJ-4",
+    "org_id": "ORG-BBB",
+    "name": "Work Area 20"
+  },
+  {
+    "work_area_id": "WA-021",
+    "location_id": "LOC-011",
+    "project_id": "PRJ-4",
+    "org_id": "ORG-BBB",
+    "name": "Work Area 21"
+  },
+  {
+    "work_area_id": "WA-022",
+    "location_id": "LOC-011",
+    "project_id": "PRJ-4",
+    "org_id": "ORG-BBB",
+    "name": "Work Area 22"
+  },
+  {
+    "work_area_id": "WA-023",
+    "location_id": "LOC-012",
+    "project_id": "PRJ-4",
+    "org_id": "ORG-BBB",
+    "name": "Work Area 23"
+  },
+  {
+    "work_area_id": "WA-024",
+    "location_id": "LOC-012",
+    "project_id": "PRJ-4",
+    "org_id": "ORG-BBB",
+    "name": "Work Area 24"
+  },
+  {
+    "work_area_id": "WA-025",
+    "location_id": "LOC-013",
+    "project_id": "PRJ-5",
+    "org_id": "ORG-CCC",
+    "name": "Work Area 25"
+  },
+  {
+    "work_area_id": "WA-026",
+    "location_id": "LOC-013",
+    "project_id": "PRJ-5",
+    "org_id": "ORG-CCC",
+    "name": "Work Area 26"
+  },
+  {
+    "work_area_id": "WA-027",
+    "location_id": "LOC-014",
+    "project_id": "PRJ-5",
+    "org_id": "ORG-CCC",
+    "name": "Work Area 27"
+  },
+  {
+    "work_area_id": "WA-028",
+    "location_id": "LOC-014",
+    "project_id": "PRJ-5",
+    "org_id": "ORG-CCC",
+    "name": "Work Area 28"
+  },
+  {
+    "work_area_id": "WA-029",
+    "location_id": "LOC-015",
+    "project_id": "PRJ-5",
+    "org_id": "ORG-CCC",
+    "name": "Work Area 29"
+  },
+  {
+    "work_area_id": "WA-030",
+    "location_id": "LOC-015",
+    "project_id": "PRJ-5",
+    "org_id": "ORG-CCC",
+    "name": "Work Area 30"
+  }
+]

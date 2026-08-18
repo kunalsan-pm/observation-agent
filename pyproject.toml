@@ -1,0 +1,37 @@
+[project]
+name = "observation-agent"
+version = "1.0.0"
+description = "A natural-language analyst over a FastMCP observation-platform server, with a web UI."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "fastmcp>=2.10",
+    "pandas>=2.0",
+    "pyarrow>=14",
+    "anthropic>=0.40",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+# The Claude Agent SDK backend, for running against a local Claude Code login
+# instead of an API key. Optional because the API backend needs neither.
+sdk = ["claude-agent-sdk>=0.2"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+observation-agent = "agent.runner:main"
+observation-agent-web = "web.app:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["agent", "web"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]

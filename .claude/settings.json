@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__observations__describe_dataset",
+      "mcp__observations__resolve_entity",
+      "mcp__observations__list_organizations",
+      "mcp__observations__list_projects",
+      "mcp__observations__list_users",
+      "mcp__observations__get_user",
+      "mcp__observations__list_templates",
+      "mcp__observations__get_template",
+      "mcp__observations__list_locations",
+      "mcp__observations__list_observations",
+      "mcp__observations__get_observation",
+      "mcp__observations__get_observation_responses",
+      "mcp__observations__list_coach_notes",
+      "mcp__observations__search_coach_notes",
+      "mcp__observations__summarize_observations",
+      "mcp__observations__topic_breakdown",
+      "mcp__observations__get_associate_profile",
+      "mcp__observations__find_sustained_low_topic_scores",
+      "mcp__observations__find_critical_failures",
+      "mcp__observations__find_cadence_violations",
+      "mcp__observations__find_score_declines",
+      "mcp__observations__find_recurring_note_concerns",
+      "Write(outputs/**)",
+      "Read(**)"
+    ]
+  },
+  "enableAllProjectMcpServers": true
+}

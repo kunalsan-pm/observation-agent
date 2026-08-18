@@ -476,9 +476,11 @@ AUTH_FAILURE_MARKERS = (
 )
 
 SDK_SETUP_HINT = (
-    "The Claude Agent SDK backend needs a logged-in Claude Code CLI. "
-    "Run `claude` in a terminal and complete /login, then retry. "
-    "Alternatively set ANTHROPIC_API_KEY to use the Anthropic API backend."
+    "The Claude Agent SDK backend needs a logged-in Claude Code CLI — being signed "
+    "in to the Claude desktop app is not enough, since the SDK spawns the CLI, which "
+    "has its own login. Run `claude` in this directory, complete /login, and accept "
+    "the workspace trust dialog (untrusted workspaces silently drop the permission "
+    "allowlist). Alternatively set ANTHROPIC_API_KEY to use the Anthropic API backend."
 )
 
 

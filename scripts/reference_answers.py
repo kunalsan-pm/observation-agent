@@ -410,10 +410,37 @@ table(
     ["observation_id", "Date", "Question", "Score", "Threshold", "Observer comment"],
     [[f["observation_id"], f["completed_at"], f["question_id"], f"**{f['score']}**", f["threshold"], f["comment"]] for f in p["critical_questions"]["failures"]],
 )
+failing_obs = {f["observation_id"] for f in p["critical_questions"]["failures"]}
+notes_on_failing = [n for n in p["coach_notes"] if n["observation_id"] in failing_obs]
 w(
-    f"Note that USR-017 has **{p['coach_note_count']} coach notes** — no coach has "
-    "written anything about a four-time critical safety failure. That gap is part of "
-    "the proposal: the detection worked, the coaching loop did not close.\n"
+    f"**The coaching loop, and why this needs escalating rather than more coaching.** "
+    f"USR-017 has {p['coach_note_count']} coach notes. "
+    f"**{len(notes_on_failing)} of them sit directly on "
+    f"{len({n['observation_id'] for n in notes_on_failing})} of the 4 observations where "
+    "the critical lockout-tagout question failed — and every one is positive.**\n"
+)
+table(
+    ["note_id", "Date", "Author", "observation_id", "Q-101 score that day", "Note body"],
+    [
+        [
+            n["note_id"],
+            n["created_at"],
+            n["author"]["user_id"],
+            n["observation_id"],
+            f"**{next(f['score'] for f in p['critical_questions']['failures'] if f['observation_id'] == n['observation_id'])}**",
+            f"*\u201c{n['body']}\u201d*",
+        ]
+        for n in notes_on_failing
+    ],
+)
+w(
+    "Two of those notes say **\u201cNothing flagged.\u201d** on days when a safety "
+    "interlock scored in the 50s. None of the eight notes mentions safety, "
+    "lockout-tagout, or any concern at all. The detection worked; the humans reading "
+    "the observation did not act on it. That is a supervision problem, not a "
+    "knowledge problem, and it is the reason a proposal here should route to "
+    f"{p['manager']['name']} ({p['manager']['user_id']}) rather than adding another "
+    "coaching note to the pile.\n"
 )
 
 w("\n---\n")

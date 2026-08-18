@@ -357,7 +357,16 @@ This is the shape that makes the case: **safety_procedures fell 22 points while 
 | OBS-000195 | 2026-04-02 | Q-101 | **43.27** | 65.0 | missed the step |
 | OBS-000194 | 2026-03-24 | Q-101 | **56.1** | 65.0 | missed the step |
 
-Note that USR-017 has **8 coach notes** — no coach has written anything about a four-time critical safety failure. That gap is part of the proposal: the detection worked, the coaching loop did not close.
+**The coaching loop, and why this needs escalating rather than more coaching.** USR-017 has 8 coach notes. **4 of them sit directly on 3 of the 4 observations where the critical lockout-tagout question failed — and every one is positive.**
+
+| note_id | Date | Author | observation_id | Q-101 score that day | Note body |
+|---|---|---|---|---|---|
+| NOTE-00105 | 2026-03-24 | MGR-001 | OBS-000194 | **56.1** | *“Used checklist consistently. Nothing flagged.”* |
+| NOTE-00109 | 2026-03-24 | MGR-002 | OBS-000194 | **56.1** | *“Solid observation overall. Good engagement with peers”* |
+| NOTE-00104 | 2026-04-19 | MGR-001 | OBS-000196 | **58.72** | *“Coverage met expectations. Workstation orderly”* |
+| NOTE-00110 | 2026-05-03 | MGR-001 | OBS-000197 | **51.92** | *“Maintained pace. Nothing flagged.”* |
+
+Two of those notes say **“Nothing flagged.”** on days when a safety interlock scored in the 50s. None of the eight notes mentions safety, lockout-tagout, or any concern at all. The detection worked; the humans reading the observation did not act on it. That is a supervision problem, not a knowledge problem, and it is the reason a proposal here should route to Bryn Martinez (MGR-002) rather than adding another coaching note to the pile.
 
 
 ---

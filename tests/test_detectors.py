@@ -160,8 +160,6 @@ def test_cadence_finds_only_usr_042_overdue():
 def test_cadence_uses_each_project_policy_not_a_global_number():
     """PRJ-3 runs a 7-day cadence and PRJ-5 a 30-day one, so a single global
     interval would produce a different (wrong) answer for both."""
-    r = a.cadence_violations()
-    cadences = {f["project_id"]: f["cadence_days"] for f in r["compliant"]}
     r_all = a.cadence_violations(include_compliant=True)
     cadences = {f["project_id"]: f["cadence_days"] for f in r_all["compliant"]}
     assert cadences["PRJ-3"] == 7

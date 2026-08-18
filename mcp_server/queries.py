@@ -51,6 +51,20 @@ from dataset import (
     user_brief,
 )
 
+def _window_or_none(
+    since: str | None, until: str | None, lookback_days: int | None
+) -> tuple[Any, Any]:
+    """Resolve a date window, or (None, None) when no date argument was given.
+
+    ``resolve_window`` always produces an ``until`` (the anchor day), which is the
+    right default for a detector but wrong for a plain list call: it would apply a
+    window the caller never asked for.
+    """
+    if since is None and until is None and lookback_days is None:
+        return None, None
+    return resolve_window(since, until, lookback_days)
+
+
 SORT_FIELDS = {
     "completed_at": "completed_dt",
     "overall_score": "overall_score",
@@ -222,9 +236,10 @@ def list_observations(
     Always returns ``total_matching`` next to the page, so a truncated result is
     never mistaken for a complete one.
     """
-    since_ts, until_ts = resolve_window(since, until, lookback_days)
-    if since is None and lookback_days is None:
-        since_ts = None
+    # No date argument at all means no date filter — resolve_window would
+    # otherwise default `until` to the anchor day and imply a window that was
+    # never asked for.
+    since_ts, until_ts = _window_or_none(since, until, lookback_days)
 
     df = filter_frame(
         OBS_DF,
@@ -233,7 +248,7 @@ def list_observations(
         subject_user_id=subject_user_id,
         observer_user_id=observer_user_id,
         since=since_ts,
-        until=until_ts if (since is not None or until is not None or lookback_days) else None,
+        until=until_ts,
     )
     if min_score is not None:
         df = df[df["overall_score"] >= float(min_score)]
@@ -414,7 +429,7 @@ def get_observation_responses(
     not just the returned page, so a broad query still yields a usable answer
     without shipping every row.
     """
-    since_ts, until_ts = resolve_window(since, until, lookback_days)
+    since_ts, until_ts = _window_or_none(since, until, lookback_days)
     df = RESP_DF
     if observation_id:
         df = df[df["observation_id"] == observation_id]
@@ -423,8 +438,8 @@ def get_observation_responses(
         org_id=org_id,
         project_id=project_id,
         subject_user_id=subject_user_id,
-        since=since_ts if (since or lookback_days) else None,
-        until=until_ts if (since or until or lookback_days) else None,
+        since=since_ts,
+        until=until_ts,
     )
     if topic_id:
         df = df[df["topic_id"] == topic_id]
@@ -513,15 +528,15 @@ def summarize_observations(
             "code": "bad_request",
         }
 
-    since_ts, until_ts = resolve_window(since, until, lookback_days)
+    since_ts, until_ts = _window_or_none(since, until, lookback_days)
     df = filter_frame(
         OBS_DF,
         org_id=org_id,
         project_id=project_id,
         subject_user_id=subject_user_id,
         observer_user_id=observer_user_id,
-        since=since_ts if (since or lookback_days) else None,
-        until=until_ts if (since or until or lookback_days) else None,
+        since=since_ts,
+        until=until_ts,
     )
     if df.empty:
         return {
@@ -599,14 +614,14 @@ def topic_breakdown(
     ``group_by_subject`` it becomes the associate x topic matrix that makes a
     localised weakness visible where ``overall_score`` hides it.
     """
-    since_ts, until_ts = resolve_window(since, until, lookback_days)
+    since_ts, until_ts = _window_or_none(since, until, lookback_days)
     df = filter_frame(
         RESP_DF,
         org_id=org_id,
         project_id=project_id,
         subject_user_id=subject_user_id,
-        since=since_ts if (since or lookback_days) else None,
-        until=until_ts if (since or until or lookback_days) else None,
+        since=since_ts,
+        until=until_ts,
     )
     if topic_id:
         df = df[df["topic_id"] == topic_id]

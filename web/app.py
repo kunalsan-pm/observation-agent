@@ -160,18 +160,22 @@ def main() -> None:
 
     backends = available_backends()
     runnable = [n for n, i in backends.items() if i["available"]]
-    print("\n  Observation Agent")
-    print(f"  → http://{host}:{port}\n")
+    print("\n  Observation Agent", flush=True)
+    print(f"  → http://{host}:{port}\n", flush=True)
     for name, info in backends.items():
-        print(f"    {'✓' if info['available'] else '·'} {info['label']:20s} {info['reason']}")
+        print(
+            f"    {'✓' if info['available'] else '·'} {info['label']:20s} {info['reason']}",
+            flush=True,
+        )
     if not runnable:
         print(
             "\n  ⚠ No model backend is available, so the UI will load but cannot answer.\n"
             "    Fix either one:\n"
             "      • export ANTHROPIC_API_KEY=sk-ant-...   (Anthropic API backend)\n"
-            "      • run `claude` in a terminal and /login  (Claude Agent SDK backend)\n"
+            "      • run `claude auth login`               (Claude Agent SDK backend)\n",
+            flush=True,
         )
-    print()
+    print("  Ctrl-C to stop. Leave this running while you use the UI.\n", flush=True)
     uvicorn.run(app, host=host, port=port, log_level="warning")
 
 

@@ -24,6 +24,8 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
+import subprocess
 import time
 from pathlib import Path
 from typing import Any, AsyncIterator
@@ -44,16 +46,84 @@ PREVIEW_CHARS = 600
 # ---------------------------------------------------------------------------
 
 
+# `claude auth status` is free and instant (no inference, no billing), so the
+# SDK backend's availability can be answered truthfully rather than inferred
+# from the CLI merely being installed. Cached briefly because /api/config is hit
+# on every page load.
+_AUTH_CACHE: dict[str, Any] = {"checked_at": 0.0, "result": None}
+_AUTH_CACHE_TTL = 30.0
+
+
+def claude_cli_auth() -> dict[str, Any]:
+    """Login state of the local claude CLI.
+
+    Returns ``{"logged_in": bool, "method": str, "detail": str}``. Never raises:
+    a CLI that is missing, too old to have `auth status`, or slow to answer is
+    reported as unverifiable rather than as a failure.
+    """
+    now = time.monotonic()
+    if _AUTH_CACHE["result"] is not None and now - _AUTH_CACHE["checked_at"] < _AUTH_CACHE_TTL:
+        return _AUTH_CACHE["result"]
+
+    cli = _find_claude_cli()
+    if not cli:
+        result = {"logged_in": False, "method": "none", "detail": "the claude CLI is not on PATH"}
+    else:
+        try:
+            proc = subprocess.run(
+                [cli, "auth", "status"],
+                capture_output=True,
+                text=True,
+                timeout=20,
+            )
+            payload = json.loads(proc.stdout.strip() or "{}")
+            logged_in = bool(payload.get("loggedIn"))
+            method = str(payload.get("authMethod") or "none")
+            result = {
+                "logged_in": logged_in,
+                "method": method,
+                "detail": (
+                    f"logged in to the claude CLI (auth method: {method})"
+                    if logged_in
+                    else "the claude CLI is installed but not logged in — run `claude auth login`"
+                ),
+            }
+        except (json.JSONDecodeError, OSError, subprocess.SubprocessError) as exc:
+            # An older CLI without `auth status` lands here. Don't claim either way.
+            result = {
+                "logged_in": None,
+                "method": "unknown",
+                "detail": f"could not verify the claude CLI login ({type(exc).__name__})",
+            }
+
+    _AUTH_CACHE.update({"checked_at": now, "result": result})
+    return result
+
+
 def available_backends() -> dict[str, dict[str, Any]]:
-    """What this machine can actually run, and why."""
+    """What this machine can actually run, and why.
+
+    "Available" means *this backend can answer a question right now* — not merely
+    that its package is importable. An installed-but-unauthenticated CLI is the
+    single most likely setup state, and reporting it as available produces a
+    green light followed by a failure.
+    """
     has_key = bool(os.environ.get("ANTHROPIC_API_KEY"))
+
     try:
         import claude_agent_sdk  # noqa: F401
 
         sdk_installed = True
     except ImportError:
         sdk_installed = False
-    cli = _find_claude_cli()
+
+    if not sdk_installed:
+        sdk_available, sdk_reason = False, "claude-agent-sdk is not installed"
+    else:
+        auth = claude_cli_auth()
+        # logged_in None means unverifiable; allow the attempt rather than block it.
+        sdk_available = auth["logged_in"] is not False
+        sdk_reason = auth["detail"]
 
     return {
         "api": {
@@ -63,23 +133,15 @@ def available_backends() -> dict[str, dict[str, Any]]:
             "reason": "ANTHROPIC_API_KEY is set" if has_key else "ANTHROPIC_API_KEY is not set",
         },
         "sdk": {
-            "available": sdk_installed and bool(cli),
+            "available": sdk_available,
             "label": "Claude Agent SDK",
             "model": os.environ.get("OBSERVATION_AGENT_SDK_MODEL") or "default (Claude Code)",
-            "reason": (
-                "claude-agent-sdk installed and the claude CLI is on PATH"
-                if sdk_installed and cli
-                else "claude-agent-sdk not installed"
-                if not sdk_installed
-                else "the claude CLI is not on PATH"
-            ),
+            "reason": sdk_reason,
         },
     }
 
 
 def _find_claude_cli() -> str | None:
-    import shutil
-
     return shutil.which("claude")
 
 
@@ -98,8 +160,9 @@ def resolve_backend(preferred: str | None = None) -> str:
         if backends[name]["available"]:
             return name
     raise RuntimeError(
-        "No backend available. Either set ANTHROPIC_API_KEY, or install the "
-        "Claude Code CLI and log in (`claude`) to use the Agent SDK backend."
+        "No backend can answer right now. Either set ANTHROPIC_API_KEY, or run "
+        "`claude auth login` so the Claude Agent SDK backend can use the CLI. "
+        + " ".join(f"[{n}: {i['reason']}]" for n, i in backends.items())
     )
 
 
@@ -478,9 +541,10 @@ AUTH_FAILURE_MARKERS = (
 SDK_SETUP_HINT = (
     "The Claude Agent SDK backend needs a logged-in Claude Code CLI — being signed "
     "in to the Claude desktop app is not enough, since the SDK spawns the CLI, which "
-    "has its own login. Run `claude` in this directory, complete /login, and accept "
-    "the workspace trust dialog (untrusted workspaces silently drop the permission "
-    "allowlist). Alternatively set ANTHROPIC_API_KEY to use the Anthropic API backend."
+    "has its own login. Run `claude auth login` (verify with `claude auth status`), and "
+    "run `claude` once in this directory to accept the workspace trust dialog "
+    "(untrusted workspaces silently drop the permission allowlist). Alternatively set "
+    "ANTHROPIC_API_KEY to use the Anthropic API backend."
 )
 
 

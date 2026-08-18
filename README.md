@@ -57,15 +57,18 @@ export ANTHROPIC_API_KEY=sk-ant-...
 ```
 
 ```bash
-claude          # in a terminal, then complete /login
+claude auth login          # check any time with: claude auth status
 ```
 
-> **If you use the Claude Agent SDK path**, run `claude` once *inside this directory*
-> and accept the trust dialog. Until you do, Claude Code silently ignores the
-> permission allowlist in `.claude/settings.json` and the agent will stall on
-> approval prompts. Logging in to the Claude desktop app is **not** enough — the SDK
-> spawns the `claude` CLI, which needs its own login. If neither path is set up the UI
-> still loads and tells you so; it just cannot answer.
+> **If you use the Claude Agent SDK path**, two things are easy to miss. Being signed
+> in to the Claude **desktop app** does not authenticate the `claude` **CLI** that the
+> SDK spawns — confirm with `claude auth status`, which should report
+> `"loggedIn": true`. And run `claude` once *inside this directory* to accept the
+> workspace trust dialog, or Claude Code silently ignores the permission allowlist in
+> `.claude/settings.json` and the agent stalls on approval prompts.
+>
+> If neither path is set up, the UI still loads and says so on the backend badge — it
+> just cannot answer.
 
 Start the web UI:
 

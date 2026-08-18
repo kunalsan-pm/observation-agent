@@ -23,7 +23,7 @@
       "mcp__observations__find_cadence_violations",
       "mcp__observations__find_score_declines",
       "mcp__observations__find_recurring_note_concerns",
-      "Write(outputs/**)",
+      "Edit(outputs/**)",
       "Read(**)"
     ]
   },

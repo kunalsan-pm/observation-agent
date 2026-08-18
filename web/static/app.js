@@ -167,7 +167,8 @@
     if (!live) {
       rows += '<div class="setup-hint"><strong>No backend available.</strong> ' +
         "The UI loads but cannot answer. Enable either one:" +
-        "<pre>export ANTHROPIC_API_KEY=sk-ant-...\n# or, in a terminal:\nclaude   # then /login</pre></div>";
+        "<pre>export ANTHROPIC_API_KEY=sk-ant-...\n\n# or, using your Claude subscription:\nclaude auth login\nclaude auth status   # expect \"loggedIn\": true</pre>" +
+        "<p style=\"margin:9px 0 0;font-size:11.5px\">Restart the server after either change.</p></div>";
     }
     el.backendBody.innerHTML = rows;
   }
@@ -473,7 +474,7 @@
         var hint = document.createElement("p");
         hint.style.margin = "9px 0 0";
         hint.style.fontSize = "12px";
-        hint.textContent = "Set ANTHROPIC_API_KEY, or run `claude` in a terminal and /login, then restart the server.";
+        hint.textContent = "Set ANTHROPIC_API_KEY, or run `claude auth login`, then restart the server.";
         box.appendChild(hint);
       }
       ui.answer.appendChild(box);

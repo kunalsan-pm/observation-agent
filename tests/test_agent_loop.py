@@ -377,3 +377,76 @@ def test_report_listing_reads_titles_back(monkeypatch, tmp_path):
     listed = reports.list_reports()
     assert listed[0]["title"] == "Critical failures"
     assert listed[0]["path"] == "outputs/a.md"
+
+
+# ---------------------------------------------------------------------------
+# Backend availability must mean "can answer right now"
+# ---------------------------------------------------------------------------
+
+
+def test_installed_but_unauthenticated_cli_is_not_available(monkeypatch):
+    """The most likely setup state. Reporting it as available produces a green
+    light followed by a failure, which is worse than a red light."""
+    from agent import backends
+
+    backends._AUTH_CACHE.update({"checked_at": 0.0, "result": None})
+    monkeypatch.setattr(backends, "_find_claude_cli", lambda: "/usr/bin/claude")
+    monkeypatch.setattr(
+        backends.subprocess,
+        "run",
+        lambda *a, **k: type("P", (), {"stdout": '{"loggedIn": false, "authMethod": "none"}'})(),
+    )
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+
+    info = backends.available_backends()
+    assert info["sdk"]["available"] is False
+    assert "not logged in" in info["sdk"]["reason"]
+    with pytest.raises(RuntimeError, match="No backend can answer"):
+        backends.resolve_backend()
+
+
+def test_logged_in_cli_is_available(monkeypatch):
+    from agent import backends
+
+    backends._AUTH_CACHE.update({"checked_at": 0.0, "result": None})
+    monkeypatch.setattr(backends, "_find_claude_cli", lambda: "/usr/bin/claude")
+    monkeypatch.setattr(
+        backends.subprocess,
+        "run",
+        lambda *a, **k: type(
+            "P", (), {"stdout": '{"loggedIn": true, "authMethod": "oauth"}'}
+        )(),
+    )
+    info = backends.available_backends()
+    assert info["sdk"]["available"] is True
+    assert "oauth" in info["sdk"]["reason"]
+
+
+def test_an_unverifiable_cli_is_allowed_to_try(monkeypatch):
+    """An older CLI with no `auth status` should not be locked out on a guess."""
+    from agent import backends
+
+    backends._AUTH_CACHE.update({"checked_at": 0.0, "result": None})
+    monkeypatch.setattr(backends, "_find_claude_cli", lambda: "/usr/bin/claude")
+
+    def boom(*a, **k):
+        raise OSError("ancient cli")
+
+    monkeypatch.setattr(backends.subprocess, "run", boom)
+    info = backends.available_backends()
+    assert info["sdk"]["available"] is True
+    assert "could not verify" in info["sdk"]["reason"]
+
+
+def test_api_key_wins_when_both_are_available(monkeypatch):
+    from agent import backends
+
+    backends._AUTH_CACHE.update({"checked_at": 0.0, "result": None})
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-ant-test")
+    monkeypatch.setattr(backends, "_find_claude_cli", lambda: "/usr/bin/claude")
+    monkeypatch.setattr(
+        backends.subprocess,
+        "run",
+        lambda *a, **k: type("P", (), {"stdout": '{"loggedIn": true, "authMethod": "oauth"}'})(),
+    )
+    assert backends.resolve_backend() == "api"

@@ -109,9 +109,10 @@ The report must contain:
 - **Caveats** — what the definition excludes, near-misses, data limitations
 - **Recommended next step** — only where the question invites one
 
-Name files `outputs/<slug>.md`, e.g. `outputs/critical-question-failures.md`.
-When the question maps to a numbered exercise question, prefix it:
-`outputs/q07-critical-question-failures.md`.
+Name files `outputs/<slug>.md`, descriptively — e.g.
+`outputs/critical-question-failures.md`. If the user's question came from the
+built-in question library, prefix the slug with its number
+(`outputs/q07-critical-question-failures.md`) so the set sorts together.
 
 For a coaching proposal, write it addressed to the named manager: the pattern,
 the dated evidence with ids, the risk if nothing changes, and one concrete,

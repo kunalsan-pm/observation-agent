@@ -86,7 +86,7 @@ def describe_dataset() -> dict[str, Any]:
     """
     return {
         "today": today_date(),
-        "today_note": "The fixture data is anchored to this date. All 'recent' / 'last N days' / 'past due' logic is measured from the end of this day, not the wall clock.",
+        "today_note": "The dataset is anchored to this date. All 'recent' / 'last N days' / 'past due' logic is measured from the end of this day, not the wall clock.",
         "counts": {
             "organizations": len(ORGS),
             "projects": len(PROJECTS),

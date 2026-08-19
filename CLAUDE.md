@@ -16,7 +16,7 @@ see below.
 | `web/` | FastAPI + SSE, and a vanilla JS/CSS frontend with no build step. |
 | `data/` | Fixture data. **Read-only.** |
 | `outputs/` | Where the agent writes reports. Gitignored. |
-| `docs/EXPECTED_ANSWERS.md` | Generated ground truth for the eleven exercise questions. |
+| `docs/EXPECTED_ANSWERS.md` | Generated ground truth for the demo question set. Question text comes from `agent/questions.py`. |
 
 ## Generated files — do not hand-edit
 
@@ -60,9 +60,9 @@ that is the point. Update the expectation deliberately and regenerate
 
 ## Data quirks that are already handled
 
-- `projects.json` has **no** `template_id`, despite the exercise brief saying it
-  does. It is derived from `templates.json` and cross-checked against every
-  observation.
+- `projects.json` has **no** `template_id`, despite the dataset's own documentation
+  saying it does. It is derived from `templates.json` and cross-checked against
+  every observation.
 - `OBS-` is overloaded: observers are 3-digit (`OBS-002`), observations 6-digit
   (`OBS-000042`). Use `classify_id` / `resolve_entity`.
 - Observer display names are not unique. Always key on `user_id`.

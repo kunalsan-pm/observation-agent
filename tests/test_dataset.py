@@ -12,15 +12,15 @@ def test_row_counts_match_the_brief():
     assert len(ds.COACH_NOTES) == 786
 
 
-def test_today_anchor_is_the_exercise_date():
+def test_today_anchor_is_the_dataset_date():
     assert ds.today_date() == "2026-05-12"
     # End-of-day, so an observation completed today is 0 days old, not -0.4.
     assert ds.today().hour == 23
 
 
 def test_project_template_mapping_is_derived():
-    """projects.json has no template_id column even though the brief says it
-    does; we derive it and it must agree with what observations carry."""
+    """projects.json has no template_id column even though the dataset docs say
+    it does; we derive it and it must agree with what observations carry."""
     assert "template_id" not in ds.PROJECTS[0]
     assert ds.TEMPLATE_ID_BY_PROJECT["PRJ-1"] == "TPL-PRJ-1"
     for row in ds.OBS_DF.itertuples():

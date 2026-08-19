@@ -2,7 +2,7 @@
 Command-line runner for the observation agent.
 
     python -m agent.runner "Which observers in PRJ-3 ..."
-    python -m agent.runner --question-set exercise      # all 11 exercise questions
+    python -m agent.runner --question-set demo          # sweep the 11 demo questions
     python -m agent.runner --list-backends
 
 Same event stream the web UI consumes, rendered to a terminal.
@@ -17,7 +17,7 @@ import sys
 from typing import Any
 
 from agent.backends import available_backends, make_backend
-from agent.questions import EXERCISE_QUESTIONS, question_by_number
+from agent.questions import DEMO_QUESTIONS, question_by_number
 
 DIM = "\033[2m"
 BOLD = "\033[1m"
@@ -120,8 +120,8 @@ async def _main() -> int:
     parser.add_argument("--list-backends", action="store_true")
     parser.add_argument(
         "--question-set",
-        choices=["exercise"],
-        help="Run the built-in exercise questions in sequence.",
+        choices=["demo"],
+        help="Run the built-in demo questions in sequence.",
     )
     parser.add_argument(
         "--only",
@@ -139,7 +139,7 @@ async def _main() -> int:
         wanted = (
             [int(n) for n in args.only.split(",")]
             if args.only
-            else [q["number"] for q in EXERCISE_QUESTIONS]
+            else [q["number"] for q in DEMO_QUESTIONS]
         )
         for number in wanted:
             spec = question_by_number(number)

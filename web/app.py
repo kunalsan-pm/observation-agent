@@ -30,7 +30,7 @@ sys.path.insert(0, str(REPO_ROOT / "mcp_server"))
 
 from agent import reports  # noqa: E402
 from agent.backends import available_backends, make_backend  # noqa: E402
-from agent.questions import EXERCISE_QUESTIONS, grouped  # noqa: E402
+from agent.questions import DEMO_QUESTIONS, grouped  # noqa: E402
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
@@ -80,7 +80,7 @@ async def config() -> dict[str, Any]:
         "runnable": runnable,
         "default_backend": runnable[0] if runnable else None,
         "questions": grouped(),
-        "question_count": len(EXERCISE_QUESTIONS),
+        "question_count": len(DEMO_QUESTIONS),
         "dataset": dataset,
         "reports": reports.list_reports(),
     }

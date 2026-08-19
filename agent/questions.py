@@ -1,58 +1,64 @@
 """
-The eleven exercise questions, in the three groups from the brief.
+The built-in demo question set.
 
-Kept in code rather than prose so the UI can offer them as one-click prompts
-and the CLI can run them as a regression set.
+Eleven questions spanning the three shapes this agent has to handle, used by the
+web UI's question library and by ``agent.runner --question-set demo`` as a
+smoke-test sweep.
+
+They are phrased the way a manager or safety lead would actually ask, and they
+deliberately carry **no** instructions about method: nothing here says "defend
+your definition" or "cite observation ids". Those are the agent's standing
+obligations from its system prompt, so leaving them out of the question is the
+more honest test — an answer that states its own rule unprompted is evidence the
+agent works, not evidence the question was leading.
 """
 
 from __future__ import annotations
 
-EXERCISE_QUESTIONS: list[dict] = [
-    # --- Lookups -----------------------------------------------------------
+DEMO_QUESTIONS: list[dict] = [
+    # --- Lookups: single-hop reads off the catalog ------------------------
     {
         "number": 1,
         "group": "Lookups",
         "short": "Organizations and industries",
-        "question": "How many organizations are in the system, and what industries do they cover?",
+        "question": "How many organizations are on the platform, and what industries do they operate in?",
     },
     {
         "number": 2,
         "group": "Lookups",
         "short": "ORG-AAA project policies",
-        "question": "What cadence policy and score threshold does each project under ORG-AAA use?",
+        "question": "What observation cadence and score threshold is each ORG-AAA project running?",
     },
     {
         "number": 3,
         "group": "Lookups",
         "short": "Managers in PRJ-1",
-        "question": "Who are the managers responsible for associates in PRJ-1?",
+        "question": "Who manages the associates in PRJ-1?",
     },
-    # --- Connections -------------------------------------------------------
+    # --- Connections: joins across records --------------------------------
     {
         "number": 4,
         "group": "Connections",
         "short": "Everything about OBS-000042",
         "question": (
-            "Show me everything about observation OBS-000042: who was observed, by whom, "
-            "when, the overall score, and any coach notes attached to it."
+            "Give me the full picture on observation OBS-000042 — who was observed, "
+            "by whom, when, how it scored, and anything a coach wrote about it."
         ),
     },
     {
         "number": 5,
         "group": "Connections",
         "short": "Busiest PRJ-3 observers",
-        "question": "Which observers in PRJ-3 have completed the most observations in the last 30 days?",
+        "question": "Who are the busiest observers in PRJ-3 over the past 30 days?",
     },
-    # --- Patterns ----------------------------------------------------------
+    # --- Patterns: rules over many records --------------------------------
     {
         "number": 6,
         "group": "Patterns",
         "short": "Sustained low topic scores",
         "question": (
-            "In ORG-AAA, which associates have a sustained pattern of low scoring on a "
-            "specific topic over their last several observations? Pick a reasonable "
-            "definition of 'sustained' and defend it, and back the answer with specific "
-            "observation IDs."
+            "In ORG-AAA, is anyone repeatedly scoring low on one particular topic "
+            "across their recent observations?"
         ),
     },
     {
@@ -60,9 +66,9 @@ EXERCISE_QUESTIONS: list[dict] = [
         "group": "Patterns",
         "short": "Critical-question failures",
         "question": (
-            "Across the whole dataset, are there any recent critical-question failures "
-            "(i.e. a critical-question score that should worry a safety manager)? List the "
-            "associate, the question, the observation, and the date."
+            "Have there been any recent critical-question failures a safety manager "
+            "should know about? I want the associate, the question, the observation "
+            "and the date."
         ),
     },
     {
@@ -70,8 +76,8 @@ EXERCISE_QUESTIONS: list[dict] = [
         "group": "Patterns",
         "short": "Recurring concerns in notes",
         "question": (
-            "In ORG-CCC, find any associates whose coach notes suggest a recurring concern "
-            "— not a single bad day, but a pattern. Cite the specific notes."
+            "In ORG-CCC, do any coach notes point to a concern that keeps coming back "
+            "rather than a one-off bad day?"
         ),
     },
     {
@@ -79,8 +85,8 @@ EXERCISE_QUESTIONS: list[dict] = [
         "group": "Patterns",
         "short": "Overdue against cadence",
         "question": (
-            "Which associates haven't been observed in longer than their project's cadence "
-            "policy allows, and how far past due are they?"
+            "Who is overdue for an observation against their project's cadence, and "
+            "by how long?"
         ),
     },
     {
@@ -88,9 +94,8 @@ EXERCISE_QUESTIONS: list[dict] = [
         "group": "Patterns",
         "short": "Decline vs own baseline",
         "question": (
-            "Are there any associates whose recent observation scores have declined "
-            "meaningfully compared to their own earlier baseline (not the cohort)? Be "
-            "specific about what 'meaningfully' means."
+            "Is anyone's recent scoring meaningfully worse than their own earlier "
+            "baseline — measured against themselves, not against their peers?"
         ),
     },
     {
@@ -98,9 +103,9 @@ EXERCISE_QUESTIONS: list[dict] = [
         "group": "Patterns",
         "short": "Coaching proposal",
         "question": (
-            "Pick one flagged associate from question 6, 7, 8, 9, or 10 and draft a short "
-            "coaching-action proposal for their manager — what the pattern is, the evidence "
-            "(observation IDs, scores, note IDs), and a concrete next step. Write it to outputs/."
+            "Take the most concerning associate you can find and draft a short "
+            "coaching-action proposal for their manager: what the pattern is, the "
+            "evidence behind it, and one concrete next step."
         ),
     },
 ]
@@ -109,8 +114,8 @@ GROUPS = ["Lookups", "Connections", "Patterns"]
 
 
 def question_by_number(number: int) -> dict | None:
-    return next((q for q in EXERCISE_QUESTIONS if q["number"] == int(number)), None)
+    return next((q for q in DEMO_QUESTIONS if q["number"] == int(number)), None)
 
 
 def grouped() -> dict[str, list[dict]]:
-    return {g: [q for q in EXERCISE_QUESTIONS if q["group"] == g] for g in GROUPS}
+    return {g: [q for q in DEMO_QUESTIONS if q["group"] == g] for g in GROUPS}

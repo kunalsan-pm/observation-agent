@@ -6,9 +6,9 @@ failures a safety manager should worry about?"* — and the agent plans a path t
 FastMCP tool server, computes the answer server-side, cites the records behind it, and
 writes a durable markdown report.
 
-Built for the Smart Access observations exercise. The starting point was a FastMCP server
-with six list/get tools and an empty agent prompt; **no cross-record filtering or
-aggregation existed** — that layer is the work.
+Built as a technical exercise over a synthetic observation dataset. The starting point was
+a FastMCP server with six list/get tools and an empty agent prompt; **no cross-record
+filtering or aggregation existed** — that layer is the work.
 
 <img src="docs/screenshot-ui.png" alt="Observation Agent — question library, dataset summary and composer" width="100%">
 
@@ -34,9 +34,9 @@ that rule and not a neighbouring one, and takes arguments so a different definit
 argued rather than hardcoded.
 
 **Every claim is traceable.** Findings carry observation ids, note ids, question ids and
-dates. `docs/EXPECTED_ANSWERS.md` is generated ground truth for all eleven exercise
-questions, and `tests/` pins the same numbers, so "did the agent get it right" is a
-testable question rather than a vibe.
+dates. `docs/EXPECTED_ANSWERS.md` is generated ground truth for the whole demo question
+set, and `tests/` pins the same numbers, so "did the agent get it right" is a testable
+question rather than a vibe.
 
 **Two runtimes, one prompt.** The same agent runs as a web app and as a Claude Code
 subagent. `agent/prompt.py` is the single source of truth; the Claude Code artifacts are
@@ -86,7 +86,7 @@ click it for setup detail.
 ```
 
 ```bash
-.venv/bin/python -m agent.runner --question-set exercise --only 6,7,11
+.venv/bin/python -m agent.runner --question-set demo --only 6,7,11
 ```
 
 ```bash
@@ -226,7 +226,7 @@ Things that are not in the brief, found while building, and handled:
 │   ├── backends.py        # Anthropic API loop | Claude Agent SDK, one event stream
 │   ├── mcp_bridge.py      # MCP ⇄ Anthropic tool-schema translation and dispatch
 │   ├── reports.py         # write_report, path-contained to outputs/
-│   ├── questions.py       # the eleven exercise questions
+│   ├── questions.py       # the built-in demo question set
 │   └── runner.py          # CLI
 ├── web/
 │   ├── app.py             # FastAPI + SSE

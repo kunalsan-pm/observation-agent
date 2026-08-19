@@ -21,13 +21,18 @@
       .replace(/'/g, "&#39;");
   }
 
-  // Inline spans. Code first, so its contents are never re-processed.
+  // Inline spans. Code spans are pulled out of the RAW text before escaping:
+  // extracting them afterwards meant their contents were escaped twice, so a
+  // quote inside `code` rendered as the literal text &quot;. The \u0000
+  // placeholder contains no HTML-special characters, so it survives escaping.
   function inline(text) {
     var codes = [];
-    var out = escapeHtml(text).replace(/`([^`]+)`/g, function (_, code) {
-      codes.push(code);
-      return "\u0000" + (codes.length - 1) + "\u0000";
-    });
+    var out = escapeHtml(
+      String(text).replace(/`([^`]+)`/g, function (_, code) {
+        codes.push(code);
+        return "\u0000" + (codes.length - 1) + "\u0000";
+      })
+    );
 
     out = out
       .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (_, label, href) {

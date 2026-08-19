@@ -11,8 +11,8 @@ crosses the wire into the model's context.
 
 Known quirks in the fixture data, handled deliberately:
 
-* ``projects.json`` has no ``template_id`` column even though the exercise
-  brief says it does. We derive project -> template from ``templates.json``
+* ``projects.json`` has no ``template_id`` column even though the dataset's own
+  documentation says it does. We derive project -> template from ``templates.json``
   (each template carries ``project_id``) and cross-check it against the
   ``template_id`` denormalized onto every observation.
 * Observer ids (``OBS-001``) and observation ids (``OBS-000042``) share a
